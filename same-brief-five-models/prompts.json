@@ -1,0 +1,37 @@
+{
+  "bigband-noir": {
+    "label": "Big-band noir (instrumental)",
+    "type": "instrumental",
+    "prompt": "Big-band noir action theme, around 60 seconds. Walking upright-bass and baritone-sax groove, snapping rimshot snare, stabbing trumpet-section hits, vibraphone glints, surf-twang guitar riff over a chromatic minor progression, roaring full-brass climax with crash cymbals. Retro secret-agent swagger, punchy analog-style production."
+  },
+  "liquid-dnb": {
+    "label": "Liquid drum & bass (instrumental)",
+    "type": "instrumental",
+    "prompt": "Liquid drum and bass instrumental, around 60 seconds. Fast rolling breakbeats at 174 BPM, deep warm sub-bass, lush atmospheric pads, delicate piano motif, airy wordless vocal-chop textures, smooth builds into a euphoric flowing drop. Silky, melodic, late-night energy, pristine modern production."
+  },
+  "pop-duet": {
+    "label": "Pop duet (model writes lyrics)",
+    "type": "prompt",
+    "prompt": "A playful pop duet between a male and a female singer about texting too late at night, around 60 seconds, catchy back-and-forth chorus."
+  },
+  "spanish-flamenco": {
+    "label": "Spanish flamenco-pop (model writes lyrics)",
+    "type": "prompt",
+    "prompt": "A fiery flamenco-pop song in Spanish about summer rain, around 60 seconds, passionate female vocals."
+  },
+  "deep-house": {
+    "label": "Deep house (our lyrics)",
+    "type": "lyrics",
+    "style": "Deep house at 121 BPM. Rolling sub-bass groove, shuffled hi-hats, warm Rhodes chord stabs, subtle chopped vocal echoes, smoky intimate female lead vocal, understated hypnotic late-night club production.",
+    "lyrics": "[Verse]\nTwo shadows in a velvet room\nMoving slow to a midnight tune\nSay it soft, we do not need more\nThe bass is talking through the floor\n\n[Chorus]\nKeep it low light, low light, hold me near\nAll we need is the bassline here\nRound and round till the morning shows\nLow light, low light, do not let go\n(do not let go, do not let go)",
+    "murekaDesc": "deep house, late night, smoky, hypnotic, groovy, 121 bpm, female vocals, warm, understated club production",
+    "vocalGender": "female"
+  },
+  "jazzy-house-duet": {
+    "label": "Jazzy house duet (our lyrics)",
+    "type": "lyrics",
+    "style": "Jazzy deep house duet at 120 BPM. Rolling deep-house groove with swung hi-hats, walking upright-bass motif over the sub, smoky muted trumpet and tenor-sax licks answering the vocals, extended jazz piano chords, a male and a female lead trading verses and joining in harmony on the chorus, small backing ensemble echoing the hook, warm vinyl texture, sophisticated late-night club production.",
+    "lyrics": "[Verse 1 - male]\nBlue hour settles on the avenue\nTrumpet smoke and a table for two\nI talk in rhythm, you answer in rhyme\nWe swing together on borrowed time\n\n[Verse 2 - female]\nYou bring the thunder of a double bass\nI bring the shimmer of a satin dress\nPiano is asking what the night is about\nWe are the answer when the lights go out\n\n[Chorus - both]\nMeet me in the blue hour, where the bass goes slow (blue hour, blue hour)\nSax on the corner and the lights burn low (burn low, burn low)\nYou take the high note, I will hold the ground\nBlue hour, blue hour - do not stop the sound",
+    "murekaDesc": "jazzy deep house, jazz house, duet, male and female vocals, group backing vocals, muted trumpet, saxophone, upright bass, swung, 120 bpm, late night, warm sophisticated production"
+  }
+}
