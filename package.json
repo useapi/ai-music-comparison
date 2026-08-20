@@ -2,6 +2,6 @@
   "name": "ai-music-comparison",
   "version": "1.0.0",
   "type": "module",
-  "description": "Same brief, five AI music models - Mureka O2/V9, MiniMax music-2.6, ElevenLabs music-v1, Lyria 3 Pro - via useapi.net",
+  "description": "Same brief, many AI music models - MiniMax Music-3.0, Lyria 3.5, Mureka V9.5 and the previous generation - via useapi.net",
   "license": "MIT"
 }
