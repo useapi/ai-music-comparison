@@ -1,14 +1,15 @@
 #!/usr/bin/env node
-// Same brief, three AI music flagships — MiniMax Music-3.0 (native), Google
-// Lyria 3.5, and Mureka V9.5 — through one useapi.net API token.
+// Same brief, four AI music flagships — TemPolor v4.8 / i4, MiniMax Music-3.0
+// (native), Google Lyria 3.5, and Mureka V9.5 — through one useapi.net API token.
 //
 //   node compare.mjs <API_TOKEN> [round]
 //
 // `round` is a key from prompts.json (default: the first one). Results land in
 // ./output/<round>/. Optional env when you have more than one account configured:
-//   MUREKA_ACCOUNT=12345678901234  MINIMAX_ACCOUNT=123456789012345678  FLOWMUSIC_EMAIL=me@example.com
+//   MUREKA_ACCOUNT=12345678901234  MINIMAX_ACCOUNT=123456789012345678
+//   FLOWMUSIC_EMAIL=me@example.com  TEMPOLOR_ACCOUNT=100000000
 //
-// 📖 Full walkthrough with all 18 generated tracks, prices and timings:
+// 📖 Full walkthrough with all 24 generated tracks, prices and timings:
 //    https://useapi.net/docs/articles/ai-music-flagships-compared
 
 import { readFileSync, writeFileSync, mkdirSync, createWriteStream } from 'node:fs';
@@ -63,6 +64,17 @@ function minimaxBody() {
   if (process.env.MINIMAX_ACCOUNT) body.account = process.env.MINIMAX_ACCOUNT;
   return body;
 }
+function tempolorRequest() {
+  // Vocals and instrumentals are different MODELS on different ENDPOINTS here,
+  // so you choose by endpoint rather than by an `instrumental` flag. Both model
+  // names are already the defaults; passing them keeps the script explicit about
+  // what produced a track, since older names are silently routed to these.
+  if (brief.type === 'instrumental')
+    return ['music/instrumental', { model_instrumental: 'i4', prompt: brief.prompt }];
+  const body = { model_song: 'v4.8', prompt: brief.type === 'lyrics' ? brief.style : brief.prompt };
+  if (brief.type === 'lyrics') body.lyrics = brief.lyrics;
+  return ['music/song', body];
+}
 function flowmusicBody() {
   // `lyria-3-pro` is still the API default — omit `model` and you silently get
   // the previous generation. Always pass it explicitly.
@@ -75,7 +87,19 @@ function flowmusicBody() {
 
 const POLL_MS = 15_000, TIMEOUT_MS = 20 * 60 * 1000;
 
+const TEMPOLOR_MODEL = brief.type === 'instrumental' ? 'i4' : 'v4.8';
+
 const models = [
+  { name: `tempolor-${TEMPOLOR_MODEL}`, submit: async () => {
+      const [endpoint, body] = tempolorRequest();
+      if (process.env.TEMPOLOR_ACCOUNT) body.user_id = process.env.TEMPOLOR_ACCOUNT;
+      const r = await api('POST', `https://api.useapi.net/v1/tempolor/${endpoint}`, body);
+      if (r.status >= 300) throw new Error(JSON.stringify(r.json).slice(0, 200));
+      if (!r.json.jobs?.length) throw new Error('no jobs in response');
+      // Submit is the only place the plan is reported — worth seeing once.
+      if (r.json.unlimited) console.log('[tempolor] account is on an unlimited plan');
+      return r.json.jobs;
+    }, poll: pollTempolor },
   { name: 'mureka-v9.5', submit: async () => {
       const [endpoint, body] = murekaRequest();
       if (process.env.MUREKA_ACCOUNT) body.account = process.env.MUREKA_ACCOUNT;
@@ -107,6 +131,26 @@ const models = [
 ];
 
 // NOTE: keep job ids RAW in the path — do not URL-encode ':' or '@'
+async function pollTempolor(jobs) {
+  const finished = [];
+  for (const job of jobs) {
+    const r = await api('GET', `https://api.useapi.net/v1/tempolor/music/${job}`);
+    if (r.status >= 400) throw new Error(`poll HTTP ${r.status}`);
+    if (r.json.status_final && r.json.status_name !== 'COMPLETED') throw new Error(`status ${r.json.status_name}`);
+    if (!r.json.status_final) return null;
+    finished.push([job, r.json]);
+  }
+  const tracks = [];
+  for (const [job, j] of finished) {
+    const d = await api('GET', `https://api.useapi.net/v1/tempolor/music/download/${job}?file_format=mp3`);
+    // A song job reports COMPLETED a few seconds BEFORE its file can be served,
+    // so a 404 here means "not yet", not "failed". Go round the loop again.
+    if (d.status === 404) return null;
+    if (d.status >= 400 || !d.json.url) throw new Error(`download HTTP ${d.status}`);
+    tracks.push({ url: d.json.url, ext: 'mp3', suffix: finished.length > 1 ? `-${tracks.length + 1}` : '', title: j.titleEn });
+  }
+  return tracks;
+}
 async function pollMureka(jobid) {
   const r = await api('GET', `https://api.useapi.net/v1/mureka/jobs/${jobid}`);
   if (r.status >= 400) throw new Error(`poll HTTP ${r.status}`);
