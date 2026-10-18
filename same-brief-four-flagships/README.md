@@ -1,11 +1,11 @@
 # Same brief, four flagships
 
-📖 Full walkthrough: [Four AI Music APIs on the Same Six Briefs: TemPolor v4.8, MiniMax Music-3.0, Lyria 3.5 and Mureka V9.5](https://useapi.net/docs/articles/ai-music-flagships-compared)
+📖 Full walkthrough: [Four AI Music APIs on the Same Six Briefs: TemPolor v4.8, MiniMax Music-3.0, Lyria 3.5 and Mureka V9.5](https://useapi.net/docs/articles/ai-music-flagships-compared?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)
 📺 Skimmable 12-minute cut of every track: [YouTube](https://youtu.be/Yqllep1eMBw)
 
 The earlier three-model round on YouTube: [AI Music APIs One Generation Later: MiniMax Music-3.0 vs Lyria 3.5 vs Mureka V9.5](https://www.youtube.com/watch?v=9AM5p-A9oFM)
 
-`compare.mjs` sends one brief from `prompts.json` to the four current AI music flagships in parallel — TemPolor `v4.8` / `i4` (via the [TemPolor API](https://useapi.net/docs/api-tempolor-v1)), MiniMax `music-3.0` (via the [native MiniMax music endpoint](https://useapi.net/docs/api-minimax-v1/post-minimax-music-create)), Google `lyria-3.5` (via the [Flow Music API](https://useapi.net/docs/api-flowmusic-v1)), and Mureka `V9.5` (via the [Mureka API](https://useapi.net/docs/api-mureka-v1)) — polls every job until it is final, and downloads every result. Mureka returns two variants, Flow Music an A/B pair with a lossless WAV, MiniMax and TemPolor a single track each.
+`compare.mjs` sends one brief from `prompts.json` to the four current AI music flagships in parallel — TemPolor `v4.8` / `i4` (via the [TemPolor API](https://useapi.net/docs/api-tempolor-v1?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)), MiniMax `music-3.0` (via the [native MiniMax music endpoint](https://useapi.net/docs/api-minimax-v1/post-minimax-music-create?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)), Google `lyria-3.5` (via the [Flow Music API](https://useapi.net/docs/api-flowmusic-v1?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)), and Mureka `V9.5` (via the [Mureka API](https://useapi.net/docs/api-mureka-v1?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)) — polls every job until it is final, and downloads every result. Mureka returns two variants, Flow Music an A/B pair with a lossless WAV, MiniMax and TemPolor a single track each.
 
 ```bash
 node ./compare.mjs <API_TOKEN> deep-house
@@ -17,15 +17,15 @@ Brief types map to the right endpoint per service automatically:
 
 | `type` | TemPolor | Mureka | MiniMax (native) | Flow Music (Lyria) |
 |---|---|---|---|---|
-| `instrumental` | [music/instrumental](https://useapi.net/docs/api-tempolor-v1/post-tempolor-music-instrumental) (`i4`) | [music/create-instrumental](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create-instrumental) | `instrumental: true` | `instrumental: true` |
-| `prompt` | [music/song](https://useapi.net/docs/api-tempolor-v1/post-tempolor-music-song) (`v4.8`) | [music/create](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create) | `prompt` | `prompt` |
-| `lyrics` | [music/song](https://useapi.net/docs/api-tempolor-v1/post-tempolor-music-song) + `lyrics` | [music/create-advanced](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create-advanced) (`lyrics` + `desc` + `vocal_gender`) | `prompt` + `lyrics` | `prompt` + `lyrics` |
+| `instrumental` | [music/instrumental](https://useapi.net/docs/api-tempolor-v1/post-tempolor-music-instrumental?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) (`i4`) | [music/create-instrumental](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create-instrumental?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) | `instrumental: true` | `instrumental: true` |
+| `prompt` | [music/song](https://useapi.net/docs/api-tempolor-v1/post-tempolor-music-song?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) (`v4.8`) | [music/create](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) | `prompt` | `prompt` |
+| `lyrics` | [music/song](https://useapi.net/docs/api-tempolor-v1/post-tempolor-music-song?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) + `lyrics` | [music/create-advanced](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create-advanced?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) (`lyrics` + `desc` + `vocal_gender`) | `prompt` + `lyrics` | `prompt` + `lyrics` |
 
 With a single account per service nothing else is needed. If you have several, pin them with `TEMPOLOR_ACCOUNT`, `MUREKA_ACCOUNT`, `MINIMAX_ACCOUNT` and `FLOWMUSIC_EMAIL` environment variables.
 
 ## Five things that will bite you
 
-**TemPolor reports a song COMPLETED before you can download it.** `status_final` flips to `true` and `status_name` reads `COMPLETED`, but [`GET music/download/job_id`](https://useapi.net/docs/api-tempolor-v1/get-tempolor-music-download-job_id) answers `404` for a few more seconds. Three of our four vocal rounds hit it on the first attempt. Treat that `404` as "not ready" and keep polling — `pollTempolor` does.
+**TemPolor reports a song COMPLETED before you can download it.** `status_final` flips to `true` and `status_name` reads `COMPLETED`, but [`GET music/download/job_id`](https://useapi.net/docs/api-tempolor-v1/get-tempolor-music-download-job_id?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) answers `404` for a few more seconds. Three of our four vocal rounds hit it on the first attempt. Treat that `404` as "not ready" and keep polling — `pollTempolor` does.
 
 **TemPolor picks the model by endpoint, not by a flag.** Vocals are `v4.8` on `music/song`, instrumentals are `i4` on `music/instrumental`. Older model names are still accepted and routed to these two, so you cannot get stuck on an old model — but you also will not be told which one ran unless you pass `model_song` / `model_instrumental` yourself.
 

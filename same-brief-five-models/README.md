@@ -1,6 +1,6 @@
 # Same brief, five models
 
-📖 Full walkthrough: [AI Music APIs Compared: Mureka vs MiniMax vs ElevenLabs vs Lyria 3 Pro](https://useapi.net/docs/articles/ai-music-api-comparison)
+📖 Full walkthrough: [AI Music APIs Compared: Mureka vs MiniMax vs ElevenLabs vs Lyria 3 Pro](https://useapi.net/docs/articles/ai-music-api-comparison?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)
 
 Skimmable 15-minute cut of every track on YouTube: [AI Music APIs Compared: Mureka vs MiniMax vs ElevenLabs vs Lyria 3 Pro](https://www.youtube.com/watch?v=9-tVK4SYuR4)
 
@@ -14,9 +14,9 @@ Brief types map to the right endpoint per service automatically:
 
 | `type` | Mureka | PixVerse (MiniMax / ElevenLabs) | Flow Music (Lyria) |
 |---|---|---|---|
-| `instrumental` | [music/create-instrumental](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create-instrumental) | `instrumental: true` | `instrumental: true` |
-| `prompt` | [music/create](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create) | `prompt` | `prompt` |
-| `lyrics` | [music/create-advanced](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create-advanced) (`lyrics` + `desc` + `vocal_gender`) | `prompt` + `lyrics` | `prompt` + `lyrics` |
+| `instrumental` | [music/create-instrumental](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create-instrumental?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) | `instrumental: true` | `instrumental: true` |
+| `prompt` | [music/create](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) | `prompt` | `prompt` |
+| `lyrics` | [music/create-advanced](https://useapi.net/docs/api-mureka-v1/post-mureka-music-create-advanced?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) (`lyrics` + `desc` + `vocal_gender`) | `prompt` + `lyrics` | `prompt` + `lyrics` |
 
 With a single account per service nothing else is needed. If you have several, pin them with `MUREKA_ACCOUNT`, `PIXVERSE_EMAIL`, and `FLOWMUSIC_EMAIL` environment variables.
 
