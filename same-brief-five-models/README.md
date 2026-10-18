@@ -2,6 +2,8 @@
 
 📖 Full walkthrough: [AI Music APIs Compared: Mureka vs MiniMax vs ElevenLabs vs Lyria 3 Pro](https://useapi.net/docs/articles/ai-music-api-comparison)
 
+Skimmable 15-minute cut of every track on YouTube: [AI Music APIs Compared: Mureka vs MiniMax vs ElevenLabs vs Lyria 3 Pro](https://www.youtube.com/watch?v=9-tVK4SYuR4)
+
 `compare.mjs` sends one brief from `prompts.json` to five AI music models in parallel — Mureka `O2`, Mureka `V9`, MiniMax `music-2.6` and ElevenLabs `music-v1` (both via the PixVerse API), and Google Lyria 3 Pro (via the Flow Music API) — polls every job until it is final, and downloads every result (Mureka returns two variants, Flow Music an A/B pair with lossless WAV).
 
 ```bash

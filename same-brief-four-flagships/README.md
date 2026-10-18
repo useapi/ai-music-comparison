@@ -3,6 +3,8 @@
 📖 Full walkthrough: [Four AI Music APIs on the Same Six Briefs: TemPolor v4.8, MiniMax Music-3.0, Lyria 3.5 and Mureka V9.5](https://useapi.net/docs/articles/ai-music-flagships-compared)
 📺 Skimmable 12-minute cut of every track: [YouTube](https://youtu.be/Yqllep1eMBw)
 
+The earlier three-model round on YouTube: [AI Music APIs One Generation Later: MiniMax Music-3.0 vs Lyria 3.5 vs Mureka V9.5](https://www.youtube.com/watch?v=9AM5p-A9oFM)
+
 `compare.mjs` sends one brief from `prompts.json` to the four current AI music flagships in parallel — TemPolor `v4.8` / `i4` (via the [TemPolor API](https://useapi.net/docs/api-tempolor-v1)), MiniMax `music-3.0` (via the [native MiniMax music endpoint](https://useapi.net/docs/api-minimax-v1/post-minimax-music-create)), Google `lyria-3.5` (via the [Flow Music API](https://useapi.net/docs/api-flowmusic-v1)), and Mureka `V9.5` (via the [Mureka API](https://useapi.net/docs/api-mureka-v1)) — polls every job until it is final, and downloads every result. Mureka returns two variants, Flow Music an A/B pair with a lossless WAV, MiniMax and TemPolor a single track each.
 
 ```bash
