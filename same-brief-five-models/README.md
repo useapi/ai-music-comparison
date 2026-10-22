@@ -1,6 +1,6 @@
 # Same brief, five models
 
-📖 Full walkthrough: [AI Music APIs Compared: Mureka vs MiniMax vs ElevenLabs vs Lyria 3 Pro](https://useapi.net/docs/articles/ai-music-api-comparison?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)
+Full walkthrough: [AI Music APIs Compared: Mureka vs MiniMax vs ElevenLabs vs Lyria 3 Pro](https://useapi.net/docs/articles/ai-music-api-comparison?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)
 
 Skimmable 15-minute cut of every track on YouTube: [AI Music APIs Compared: Mureka vs MiniMax vs ElevenLabs vs Lyria 3 Pro](https://www.youtube.com/watch?v=9-tVK4SYuR4)
 

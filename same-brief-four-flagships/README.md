@@ -1,7 +1,7 @@
 # Same brief, four flagships
 
-📖 Full walkthrough: [Four AI Music APIs on the Same Six Briefs: TemPolor v4.8, MiniMax Music-3.0, Lyria 3.5 and Mureka V9.5](https://useapi.net/docs/articles/ai-music-flagships-compared?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)
-📺 Skimmable 12-minute cut of every track: [YouTube](https://youtu.be/Yqllep1eMBw)
+Full walkthrough: [Four AI Music APIs on the Same Six Briefs: TemPolor v4.8, MiniMax Music-3.0, Lyria 3.5 and Mureka V9.5](https://useapi.net/docs/articles/ai-music-flagships-compared?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison)
+Skimmable 12-minute cut of every track on [YouTube](https://youtu.be/Yqllep1eMBw)
 
 The earlier three-model round on YouTube: [AI Music APIs One Generation Later: MiniMax Music-3.0 vs Lyria 3.5 vs Mureka V9.5](https://www.youtube.com/watch?v=9AM5p-A9oFM)
 
@@ -25,14 +25,26 @@ With a single account per service nothing else is needed. If you have several, p
 
 ## Five things that will bite you
 
-**TemPolor reports a song COMPLETED before you can download it.** `status_final` flips to `true` and `status_name` reads `COMPLETED`, but [`GET music/download/job_id`](https://useapi.net/docs/api-tempolor-v1/get-tempolor-music-download-job_id?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) answers `404` for a few more seconds. Three of our four vocal rounds hit it on the first attempt. Treat that `404` as "not ready" and keep polling — `pollTempolor` does.
+### TemPolor reports a song COMPLETED before you can download it
 
-**TemPolor picks the model by endpoint, not by a flag.** Vocals are `v4.8` on `music/song`, instrumentals are `i4` on `music/instrumental`. Older model names are still accepted and routed to these two, so you cannot get stuck on an old model — but you also will not be told which one ran unless you pass `model_song` / `model_instrumental` yourself.
+`status_final` flips to `true` and `status_name` reads `COMPLETED`, but [`GET music/download/job_id`](https://useapi.net/docs/api-tempolor-v1/get-tempolor-music-download-job_id?utm_source=github.com&utm_medium=referral&utm_campaign=ai-music-comparison) answers `404` for a few more seconds. Three of our four vocal rounds hit it on the first attempt. Treat that `404` as "not ready" and keep polling — `pollTempolor` does.
 
-**`lyria-3-pro` is still the Flow Music default.** Omit `model` and you get the previous generation, silently — the render succeeds and nothing tells you it was the old model. The script always passes `model: 'lyria-3.5'` explicitly.
+### TemPolor picks the model by endpoint, not by a flag
 
-**MiniMax runs one music generation per account at a time** and returns `429` otherwise — and it counts songs you start on [minimax.io](https://www.minimax.io/audio/music) as well as through the API. The script waits and retries rather than failing. Music also bills against a separate [MiniMax Audio](https://www.minimax.io/audio/subscribe) balance from video and images: a call with no audio credit returns `412 Insufficient credits` however much video credit the account holds.
+Vocals are `v4.8` on `music/song`, instrumentals are `i4` on `music/instrumental`. Older model names are still accepted and routed to these two, so you cannot get stuck on an old model — but you also will not be told which one ran unless you pass `model_song` / `model_instrumental` yourself.
 
-**`instrumental: true` is required for a wordless track.** On both MiniMax and Flow Music, leaving `lyrics` empty is not enough — the model writes its own words and sings them. TemPolor sidesteps the question by putting instrumentals on their own endpoint.
+### `lyria-3-pro` is still the Flow Music default
 
-Two more things worth knowing before you run it. None of the four exposes a duration parameter, and asking in the prompt is unreliable — the amount of `lyrics` you supply is the only real lever on song length. And if you supply your own lyrics with role labels, check what each model does with them: TemPolor's own lyric generator writes inline `[Male]` / `[Female]` tags that its singer then performs as words, while MiniMax's `(Male)` / `(Female)` are dropped. Labels inside `lyrics` are not a portable API feature.
+Omit `model` and you get the previous generation, silently — the render succeeds and nothing tells you it was the old model. The script always passes `model: 'lyria-3.5'` explicitly.
+
+### MiniMax runs one music generation per account at a time
+
+It returns `429` otherwise, and it counts songs you start on [minimax.io](https://www.minimax.io/audio/music) as well as through the API. The script waits and retries rather than failing. Music also bills against a separate [MiniMax Audio](https://www.minimax.io/audio/subscribe) balance from video and images: a call with no audio credit returns `412 Insufficient credits` however much video credit the account holds.
+
+### `instrumental: true` is required for a wordless track
+
+On both MiniMax and Flow Music, leaving `lyrics` empty is not enough — the model writes its own words and sings them. TemPolor sidesteps the question by putting instrumentals on their own endpoint.
+
+## Two more things worth knowing
+
+None of the four exposes a duration parameter, and asking in the prompt is unreliable — the amount of `lyrics` you supply is the only real lever on song length. And if you supply your own lyrics with role labels, check what each model does with them: TemPolor's own lyric generator writes inline `[Male]` / `[Female]` tags that its singer then performs as words, while MiniMax's `(Male)` / `(Female)` are dropped. Labels inside `lyrics` are not a portable API feature.
